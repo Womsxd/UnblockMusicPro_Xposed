@@ -1,12 +1,14 @@
 # UnblockMusicPro_Xposed
 
 安卓端基于Xposed解锁网易云音乐客户端变灰歌曲
-
-[蓝奏云地址](https://www.lanzous.com/b00cygvgf) 访问密码：23fj
-
-还有多少人用这个项目？快帮我点小星星呀，我要好多好多的小星星！
+由于原作者停止维护，加上大喇叭beta版属实用不来，本人把脚本改成了[1582421598/UnblockNeteaseMusic-Renewed](https://github.com/1582421598/UnblockNeteaseMusic-Renewed)的修改版
+注：本人不会java
 
 ## 致谢
+
+[1582421598/UnblockNeteaseMusic-Renewed](https://github.com/1582421598/UnblockNeteaseMusic-Renewed)
+
+[nining377/UnblockMusicPro_Xposed](https://github.com/nining377/UnblockMusicPro_Xposed)
 
 [nondanee/UnblockNeteaseMusic](https://github.com/nondanee/UnblockNeteaseMusic)
 
@@ -15,4 +17,5 @@
 [Flysky12138/UnblockNeteaseMusic-Android](https://github.com/Flysky12138/UnblockNeteaseMusic-Android)
 
 ## 许可
+
 The MIT License
