@@ -1,57 +1,77 @@
 const find = require('./find')
+const select = require('./select')
 const request = require('../request')
 
 const provider = {
 	netease: require('./netease'),
 	qq: require('./qq'),
-	xiami: require('./xiami'),
 	baidu: require('./baidu'),
 	kugou: require('./kugou'),
 	kuwo: require('./kuwo'),
 	migu: require('./migu'),
 	joox: require('./joox'),
-	youtube: require('./youtube')
+	youtube: require('./youtube'),
+	bilibili: require('./bilibili'),
+	pyncmd: require('./pyncmd')
 }
 
-const match = (id, source) => {
+const match = (id, source, data) => {
 	let meta = {}
-	const candidate = (source || global.source || ['qq', 'kuwo', 'migu']).filter(name => name in provider)
-	return find(id)
-	.then(info => {
-		meta = info
-		return Promise.all(candidate.map(name => provider[name].check(info).catch(() => {})))
-	})
-	.then(urls => {
-		urls = urls.filter(url => url)
-		return Promise.all(urls.map(url => check(url)))
-	})
-	.then(songs => {
-		songs = songs.filter(song => song.url)
-		if (!songs.length) return Promise.reject()
-		console.log(`[${meta.id}] ${meta.name}\n${songs[0].url}`)
-		return songs[0]
-	})
+	const candidate = (source || global.source || ['pyncmd', 'qq', 'kuwo', 'bilibili']).filter(name => name in provider)
+	return find(id, data)
+		.then(info => {
+			meta = info
+			return Promise.all(candidate.map(name => provider[name].check(info).catch(() => {})))
+		})
+		.then(datas => {
+			datas = datas.filter(data => data && data.url)
+			return Promise.all(datas.map(data => check(data.url, data.weight)))
+		})
+		.then(songs => {
+			if (!songs.length) return Promise.reject()
+			const song = select.selectArray(songs)
+			console.log(`[${meta.id}] ${meta.name}\n${song.url}\nWeight: ${song.weight}`)
+			return song
+		})
 }
 
-const check = url => {
-	const song = {size: 0, br: null, url: null, md5: null}
-	return Promise.race([request('GET', url, {'range': 'bytes=0-8191'}), new Promise((_, reject) => setTimeout(() => reject(504), 5 * 1000))])
-	.then(response => {
-		if (!response.statusCode.toString().startsWith('2')) return Promise.reject()
-		if (url.includes('qq.com'))
-			song.md5 = response.headers['server-md5']
-		else if (url.includes('xiami.net') || url.includes('qianqian.com'))
-			song.md5 = response.headers['etag'].replace(/"/g, '').toLowerCase()
-		song.size = parseInt((response.headers['content-range'] || '').split('/').pop() || response.headers['content-length']) || 0
-		song.url = response.url.href
-		return response.headers['content-length'] === '8192' ? response.body(true) : Promise.reject()
-	})
-	.then(data => {
-		const bitrate = decode(data)
-		song.br = (bitrate && !isNaN(bitrate)) ? bitrate * 1000 : null
-	})
-	.catch(() => {})
-	.then(() => song)
+const check = (url, weight) => {
+	const song = {
+		size: 0,
+		br: null,
+		url: null,
+		md5: null,
+		weight: weight
+	}
+	let header = {
+		'range': 'bytes=0-8191'
+	}
+	if (url.includes("bilivideo.com")) {
+		header = {
+			'range': 'bytes=0-8191',
+			'referer': "https://www.bilibili.com/"
+		}
+	}
+	return Promise.race([request('GET', url, header), new Promise((_, reject) => setTimeout(() => reject(504), 5 * 1000))])
+		.then(response => {
+			if (!response.statusCode.toString().startsWith('2')) return Promise.reject()
+			if (url.includes('126.net'))
+				// song.md5 = response.headers['x-nos-meta-origin-md5'] || response.headers['etag'].replace(/"/g, '')
+				song.md5 = url.split('/').slice(-1)[0].replace(/\..*/g, '')
+			else if (url.includes('qq.com'))
+				song.md5 = response.headers['server-md5']
+			else if (url.includes('qianqian.com'))
+				song.md5 = response.headers['etag'].replace(/"/g, '').toLowerCase()
+			song.size = parseInt((response.headers['content-range'] || '').split('/').pop() || response.headers['content-length']) || 0
+			song.url = response.url.href
+			return response.headers['content-length'] === '8192' ? response.body(true) : Promise.reject()
+		})
+		.then(data => {
+			const bitrate = decode(data)
+			song.br = (bitrate && !isNaN(bitrate)) ? bitrate * 1000 : null
+		})
+		.catch(() => {})
+		.then(() => song)
 }
 
 const decode = buffer => {

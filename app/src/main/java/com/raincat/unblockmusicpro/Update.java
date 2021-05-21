@@ -26,7 +26,7 @@ public class Update extends BaseObject {
     String zipUrl = "";
 
     private final static String appUrl = "https://api.github.com/repos/nining377/UnblockMusicPro_Xposed/releases/latest";
-    private final static String scriptUrl = "https://api.github.com/repos/nondanee/UnblockNeteaseMusic/releases/latest";
+    private final static String scriptUrl = "https://api.github.com/repos/1582421598 / UnblockNeteaseMusic-Renewed/releases/latest";
 
     static void getAppVersion(Context context, NetCallBack back) {
         new HTTPS_GET(context, appUrl, null, false, false, back);

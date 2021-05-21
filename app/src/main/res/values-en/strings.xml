@@ -21,7 +21,7 @@
     <string name="kuwo">KUWO</string>
     <string name="migu">MIGO</string>
     <string name="qq">QQ</string>
-    <string name="kugou">KUGOU</string>
+    <string name="pyncmd">KUGOU</string>
 
     <string name="menu_clean">Clean Log</string>
     <string name="menu_update">Update Log</string>

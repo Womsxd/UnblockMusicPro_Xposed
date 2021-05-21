@@ -11,7 +11,7 @@ chrome.runtime.onMessageExternal.addListener((request, sender, sendResponse) => 
 chrome.webRequest.onBeforeSendHeaders.addListener(details => {
 	let headers = details.requestHeaders
 	if(details.url.includes('//music.163.com/')){
-		headers.push({name: 'X-Real-IP', value: '118.88.88.88'})
+		headers.push({name: 'X-Real-IP', value: '119.233.233.233'})
 	}
 	if(details.initiator == `chrome-extension://${self}`){
 		let index = headers.findIndex(item => item.name.toLowerCase() === 'additional-headers')

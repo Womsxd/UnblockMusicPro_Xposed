@@ -35,7 +35,7 @@ if (config.forceHost && require('net').isIP(config.forceHost) === 0) {
 	process.exit(1)
 }
 if (config.matchOrder) {
-	const provider = new Set(['netease', 'qq', 'xiami', 'baidu', 'kugou', 'kuwo', 'migu', 'joox', 'youtube'])
+	const provider = new Set(['netease', 'qq', 'baidu', 'kugou', 'kuwo', 'migu', 'joox', 'youtube', 'bilibili', 'pyncmd'])
 	const candidate = config.matchOrder
 	if (candidate.some((key, index) => index != candidate.indexOf(key))) {
 		console.log('Please check the duplication in match order.')
@@ -83,4 +83,7 @@ Promise.all([httpdns, httpdns2].map(query => query(target.join(','))).concat(tar
 	if (port[0]) server.http.listen(port[0], address).once('listening', () => log(0))
 	if (port[1]) server.https.listen(port[1], address).once('listening', () => log(1))
 })
-.catch(error => console.log(error))
+.catch(error => {
+	console.log(error)
+	process.exit(1)
+})

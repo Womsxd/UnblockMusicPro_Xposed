@@ -244,7 +244,7 @@
                 android:checked="false"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:gravity="center"
-                android:text="@string/kugou"
+                android:text="@string/pyncmd"
                 android:textColor="@color/color_radio"
                 android:textSize="15sp" />
 

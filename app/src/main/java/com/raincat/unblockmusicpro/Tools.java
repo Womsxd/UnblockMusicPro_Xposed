@@ -58,14 +58,14 @@ public class Tools {
     final static String SDCardPath = Environment.getExternalStorageDirectory() + "/UnblockMusicPro";
     final static String neteaseCachePath = Environment.getExternalStorageDirectory() + "/netease/cloudmusic/Ad";
     final static String Start = "./node app.js -o ";
-    final static String origin[] = new String[]{"kuwo migu kugou qq", "migu kuwo kugou qq", "kugou kuwo migu qq", "qq kuwo migu kugou"};
+    final static String origin[] = new String[]{"kuwo migu pyncmd qq", "migu kuwo pyncmd qq", "pyncmd kuwo migu qq", "qq kuwo migu pyncmd"};
     final static int originResId[] = new int[]{R.id.rb_a, R.id.rb_b, R.id.rb_c, R.id.rb_d};
-    final static int originString[] = new int[]{R.string.kuwo, R.string.migu, R.string.kugou, R.string.qq};
+    final static int originString[] = new int[]{R.string.kuwo, R.string.migu, R.string.pyncmd, R.string.qq};
     final static String State = "[ \"`pgrep node`\" != \"\" ] && echo YES";
     final static String Stop = "killall -9 node >/dev/null 2>&1";
     final static String message = "酷我：音质高，部分可下载无损\n" +
             "咪咕：酷我没有的歌用咪咕试试\n" +
-            "酷狗：同上\n" +
+            "云解析：网易云云解析\n" +
             "ＱＱ：叫爸爸，歌曲多但音质较差。";
 
     /**

@@ -12,6 +12,8 @@
 
 ## 运行
 
+目前所有的可用环境变量：VIP，ENABLE_FLAC，YOUTUBE_KEY，QQ_COOKIE，SIGN_KEY，SIGN_CERT
+
 使用 npx
 
 ```
