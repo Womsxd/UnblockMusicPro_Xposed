@@ -306,6 +306,7 @@ public class MainActivity extends PermissionProxyActivity {
     private void changeQuality(boolean high) {
         String packageJson = Tools.readFileFromSD(Tools.SDCardPath + File.separator + "package.json");
         String kuwo = Tools.readFileFromSD(Tools.SDCardPath + File.separator + "src" + File.separator + "provider" + File.separator + "select.js");
+        String pyncmd = Tools.readFileFromSD(Tools.SDCardPath + File.separator + "src" + File.separator + "provider" + File.separator + "select.js");
 //        String migu = Tools.readFileFromSD(Tools.SDCardPath + File.separator + "src" + File.separator + "provider" + File.separator + "migu.js");
         String hook = Tools.readFileFromSD(Tools.SDCardPath + File.separator + "src" + File.separator + "hook.js");
         String localVersionString = "";
