@@ -306,7 +306,6 @@ public class MainActivity extends PermissionProxyActivity {
     private void changeQuality(boolean high) {
         String packageJson = Tools.readFileFromSD(Tools.SDCardPath + File.separator + "package.json");
         String kuwo = Tools.readFileFromSD(Tools.SDCardPath + File.separator + "src" + File.separator + "provider" + File.separator + "select.js");
-        String pyncmd = Tools.readFileFromSD(Tools.SDCardPath + File.separator + "src" + File.separator + "provider" + File.separator + "select.js");
 //        String migu = Tools.readFileFromSD(Tools.SDCardPath + File.separator + "src" + File.separator + "provider" + File.separator + "migu.js");
         String hook = Tools.readFileFromSD(Tools.SDCardPath + File.separator + "src" + File.separator + "hook.js");
         String localVersionString = "";
@@ -321,14 +320,11 @@ public class MainActivity extends PermissionProxyActivity {
                 packageJson = packageJson.replace(localVersionString, localVersionString + "-high");
             if (!kuwo.contains("\nmodule.exports.ENABLE_FLAC = 'true'"))
                 kuwo = kuwo + "\nmodule.exports.ENABLE_FLAC = 'true'";
-            if (!pyncmd.contains("\nmodule.exports.ENABLE_FLAC = 'true'"))
-                pyncmd = pyncmd + "\nmodule.exports.ENABLE_FLAC = 'true'";
 //            migu = migu.replace("/*'sqPlayInfo'*/,", "'sqPlayInfo',");
             hook = hook.replace("(item.code != 200 || item.freeTrialInfo)", "(item.code != 200 || item.freeTrialInfo || item.br <= 128000)");
         } else {
             packageJson = packageJson.replace(localVersionString, localVersionString.replace("-high", ""));
             kuwo = kuwo.replace("\n\nmodule.exports.ENABLE_FLAC = 'true'", "");
-            pyncmd = pyncmd.replace("\n\nmodule.exports.ENABLE_FLAC = 'true'", "");
 //            migu = migu.replace("'sqPlayInfo',", "/*'sqPlayInfo'*/,");
             hook = hook.replace("(item.code != 200 || item.freeTrialInfo || item.br <= 128000)", "(item.code != 200 || item.freeTrialInfo)");
         }

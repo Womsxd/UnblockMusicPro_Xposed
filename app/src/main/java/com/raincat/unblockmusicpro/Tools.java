@@ -58,7 +58,7 @@ public class Tools {
     final static String SDCardPath = Environment.getExternalStorageDirectory() + "/UnblockMusicPro";
     final static String neteaseCachePath = Environment.getExternalStorageDirectory() + "/netease/cloudmusic/Ad";
     final static String Start = "./node app.js -o ";
-    final static String origin[] = new String[]{"kuwo migu pyncmd qq", "migu kuwo pyncmd qq", "pyncmd kuwo migu qq", "qq kuwo migu pyncmd"};
+    final static String origin[] = new String[]{"pyncmd kuwo migu qq", "pyncmd migu kuwo qq", "pyncmd kuwo migu qq", "qq kuwo migu pyncmd"};
     final static int originResId[] = new int[]{R.id.rb_a, R.id.rb_b, R.id.rb_c, R.id.rb_d};
     final static int originString[] = new int[]{R.string.kuwo, R.string.migu, R.string.pyncmd, R.string.qq};
     final static String State = "[ \"`pgrep node`\" != \"\" ] && echo YES";
