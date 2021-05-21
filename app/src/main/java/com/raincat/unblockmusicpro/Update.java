@@ -25,7 +25,7 @@ public class Update extends BaseObject {
     String log = "";
     String zipUrl = "";
 
-    private final static String appUrl = "https://api.github.com/repos/nining377/UnblockMusicPro_Xposed/releases/latest";
+    private final static String appUrl = "https://api.github.com/repos/womsxd/UnblockMusicPro_Xposed/releases/latest";
     private final static String scriptUrl = "https://api.github.com/repos/1582421598/UnblockNeteaseMusic-Renewed/releases/latest";
 
     static void getAppVersion(Context context, NetCallBack back) {
