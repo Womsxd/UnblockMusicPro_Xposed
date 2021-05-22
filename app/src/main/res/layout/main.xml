@@ -45,6 +45,53 @@
                 android:checked="true"
                 android:clickable="false" />
         </RelativeLayout>
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/proxy"
+                    android:textColor="@color/colorText"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="50dp"
+                    android:text="优先使用此处配置的代理服务器"
+                    android:textColor="@color/colorButton_text"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/et_proxy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColorHint="#95A1AA"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:cursorVisible="false"
+                android:background="@color/colorEditor"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingEnd="60dp"
+                android:paddingRight="60dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+            </EditText>
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rela_high"
