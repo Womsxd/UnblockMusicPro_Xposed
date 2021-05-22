@@ -38,6 +38,7 @@ jobs:
     - name: Build project
       run: |
         if ${{ !!github.head_ref }}; then echo "::warning:: Gradle $WARN_ON_PR"; fi
+        chmod +x gradlew
         ./gradlew build
     
     - name: Upload articact
