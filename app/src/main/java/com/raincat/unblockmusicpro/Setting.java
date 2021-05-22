@@ -14,7 +14,7 @@ import de.robv.android.xposed.XSharedPreferences;
 
 class Setting {
 
-    public static final String DEFAULT_PROXY = "127.0.0.1:23331";
+    public static final String DEFAULT_PROXY = "127.0.0.1:23338";
 
     private static XSharedPreferences preferences;
 

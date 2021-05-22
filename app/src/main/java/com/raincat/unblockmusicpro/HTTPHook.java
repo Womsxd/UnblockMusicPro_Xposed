@@ -77,22 +77,22 @@ public class HTTPHook implements IHookerDispatcher {
                             final String processName = Tools.getCurrentProcessName(neteaseContext);
                             
                             //主进程脚本注入
-                            if (processName.equals(Tools.HOOK_NAME)) {
+                            Boolean onlyUseProxy = !Setting.DEFAULT_PROXY.equals(Setting.getProxy());
+                            if (!onlyUseProxy && processName.equals(Tools.HOOK_NAME)) {
                                 if (!initData(neteaseContext))
                                     return;
                             } else if (processName.equals(Tools.HOOK_NAME + ":play")) {
-                                if (initData(neteaseContext)) {
-                                    showLog = Setting.getLog();
-                                    if (!Setting.DEFAULT_PROXY.equals(Setting.getProxy())) {
+                                if (onlyUseProxy || initData(neteaseContext)) {
+                                    if (onlyUseProxy) {
                                         new Thread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                hook(neteaseContext, processName);
                                                 Tools.showToastOnLooper(neteaseContext, "运行成功，使用代理：" + Setting.getProxy());
                                             }
                                         }).start();
                                         return;
                                     }
+                                    showLog = Setting.getLog();
                                     String port = " -p 23338:23339";
                                     Command start = new Command(0, Tools.Stop, "cd " + codePath, Setting.getNodejs() + port) {
                                         @Override
