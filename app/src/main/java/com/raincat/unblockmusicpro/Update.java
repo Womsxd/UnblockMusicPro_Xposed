@@ -42,6 +42,10 @@ public class Update extends BaseObject {
         JSONArray array = jsonObject.getJSONArray("assets");
         if (array.length() > 0)
             update.downloadUrl = getJsonString(array.getJSONObject(0), "browser_download_url");
+        int find_Url = update.downloadUrl.indexOf("1582421598/UnblockNeteaseMusic-Renewed");
+        if (find_Url != -1){
+            update.downloadUrl = "";
+        }
         update.log = getJsonString(jsonObject, "body");
         update.zipUrl = getJsonString(jsonObject, "zipball_url");
         return update;
