@@ -104,7 +104,7 @@ public class MainActivity extends PermissionProxyActivity {
             int nowVersion = Integer.parseInt(Tools.nowVersion.replace(".", "00").replace("-high", ""));
             if (nowVersion > localVersion) {
                 //复制核心文件文件到SD卡
-                Tools.copyFilesAssets(context, "UnblockNeteaseMusic-Renewed" + Tools.nowVersion, Tools.SDCardPath);
+                Tools.copyFilesAssets(context, "UnblockNeteaseMusic-Renewed-" + Tools.nowVersion, Tools.SDCardPath);
                 Tools.copyFilesAssets(context, "shell", Tools.SDCardPath);
                 if (Tools.is64BitImpl())
                     Tools.copyFilesAssets(context, "node-64bit", Tools.SDCardPath);
@@ -113,7 +113,7 @@ public class MainActivity extends PermissionProxyActivity {
                 changeQuality(cb_high.isChecked());
             } else {
                 Tools.nowVersion = localVersionString;
-                Tools.copyFilesAssets(context, "UnblockNeteaseMusic-Renewed" + Tools.nowVersion.replace("-high", "") + "/node_modules", Tools.SDCardPath + "/node_modules");
+                Tools.copyFilesAssets(context, "UnblockNeteaseMusic-Renewed-" + Tools.nowVersion.replace("-high", "") + "/node_modules", Tools.SDCardPath + "/node_modules");
             }
             Tools.copyFilesAssets(context, "log", Tools.SDCardPath);
         } catch (JSONException e) {
