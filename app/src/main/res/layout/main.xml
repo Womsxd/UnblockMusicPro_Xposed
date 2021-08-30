@@ -148,7 +148,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/high_quality"
+                    android:text="@string/high_quality_all"
                     android:textColor="@color/colorText"
                     android:textSize="16sp" />
 

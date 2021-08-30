@@ -46,8 +46,8 @@ import java.io.File;
 
 public class MainActivity extends PermissionProxyActivity {
     private Context context;
-    private RelativeLayout rela_enable, rela_high,  rela_high_all,  rela_hide, rela_log;
-    private CheckBox cb_enable, cb_high,  cb_high_all,  cb_hide, cb_log;
+    private RelativeLayout rela_enable, rela_high, rela_high_all, rela_hide, rela_log;
+    private CheckBox cb_enable, cb_high, cb_high_all, cb_hide, cb_log;
     private TextView tv_update, tv_faq, tv_version, tv_script, tv_perfect[];
     private ImageView iv_question, iv_version, iv_script;
     private RadioGroup rg_origin;
@@ -137,6 +137,7 @@ public class MainActivity extends PermissionProxyActivity {
         rela_log = (RelativeLayout) findViewById(R.id.rela_log);
         cb_enable = (CheckBox) findViewById(R.id.cb_enable);
         cb_high = (CheckBox) findViewById(R.id.cb_high);
+        cb_high_all = (CheckBox) findViewById(R.id.cb_high_all);
         cb_hide = (CheckBox) findViewById(R.id.cb_hide);
         cb_log = (CheckBox) findViewById(R.id.cb_log);
 
@@ -367,9 +368,9 @@ public class MainActivity extends PermissionProxyActivity {
             hook = hook.replace("(item.code != 200 || item.freeTrialInfo || item.br <= 128000)", "(item.code != 200 || item.freeTrialInfo)");
         }
         if (high_all){
-            hook = hook.replace("const min_br = process.env.MIN_BR || 0;", "const min_br = process.env.MIN_BR || 42000;");
+            hook = hook.replace("const min_br = process.env.MIN_BR || 0;", "const min_br = process.env.MIN_BR || 420000;");
         } else{
-            hook = hook.replace("const min_br = process.env.MIN_BR || 42000", "const min_br = process.env.MIN_BR || 0");
+            hook = hook.replace("const min_br = process.env.MIN_BR || 420000", "const min_br = process.env.MIN_BR || 0");
         }
         Tools.writeFileFromSD(Tools.SDCardPath + File.separator + "package.json", packageJson);
         Tools.writeFileFromSD(Tools.SDCardPath + File.separator + "src" + File.separator + "provider" + File.separator + "select.js", kuwo);
