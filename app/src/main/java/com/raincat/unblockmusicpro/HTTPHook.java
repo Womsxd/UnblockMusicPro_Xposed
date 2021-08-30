@@ -170,7 +170,7 @@ public class HTTPHook implements IHookerDispatcher {
 
                                                 Object urlObj = urlField.get(request);
                                                 if (urlObj.toString().contains("yyaac") || urlObj.toString().contains("eapi/cloud") || urlObj.toString().contains("ymusic") || urlObj.toString().contains("&thumbnail")) {
-                                                    proxyField.set(client, null);
+                                                    proxyField.set(client, proxy);
                                                     sslSocketFactoryField.set(client, sslSocketFactory);
                                                 } else {
                                                     proxyField.set(client, proxy);
