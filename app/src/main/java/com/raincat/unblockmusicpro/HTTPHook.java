@@ -84,16 +84,11 @@ public class HTTPHook implements IHookerDispatcher {
                             } else if (processName.equals(Tools.HOOK_NAME + ":play")) {
                                 if (onlyUseProxy || initData(neteaseContext)) {
                                     if (onlyUseProxy) {
-                                        new Thread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Tools.showToastOnLooper(neteaseContext, "运行成功，使用代理：" + Setting.getProxy());
-                                                if (preferences == null)
-                                                        preferences = neteaseContext.getSharedPreferences("share", Context.MODE_MULTI_PROCESS);
-                                                preferences.edit().putBoolean("hook", true).apply();
-                                                firstToastShow = false;
-                                            }
-                                        }).start();
+                                        Tools.showToastOnLooper(neteaseContext, "运行成功，使用代理：" + Setting.getProxy());
+                                        if (preferences == null)
+                                            preferences = neteaseContext.getSharedPreferences("share", Context.MODE_MULTI_PROCESS);
+                                        preferences.edit().putBoolean("hook", true).apply();
+                                        firstToastShow = false;
                                         //return;
                                     } else {
                                         showLog = Setting.getLog();
@@ -175,7 +170,7 @@ public class HTTPHook implements IHookerDispatcher {
 
                                                 Object urlObj = urlField.get(request);
                                                 if (urlObj.toString().contains("yyaac") || urlObj.toString().contains("eapi/cloud") || urlObj.toString().contains("ymusic") || urlObj.toString().contains("&thumbnail")) {
-                                                    proxyField.set(client, proxy);
+                                                    proxyField.set(client, null);
                                                     sslSocketFactoryField.set(client, sslSocketFactory);
                                                 } else {
                                                     proxyField.set(client, proxy);
