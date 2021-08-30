@@ -46,8 +46,8 @@ import java.io.File;
 
 public class MainActivity extends PermissionProxyActivity {
     private Context context;
-    private RelativeLayout rela_enable, rela_high,  rela_hide, rela_log;
-    private CheckBox cb_enable, cb_high,  cb_hide, cb_log;
+    private RelativeLayout rela_enable, rela_high,  rela_high_all,  rela_hide, rela_log;
+    private CheckBox cb_enable, cb_high,  cb_high_all,  cb_hide, cb_log;
     private TextView tv_update, tv_faq, tv_version, tv_script, tv_perfect[];
     private ImageView iv_question, iv_version, iv_script;
     private RadioGroup rg_origin;
@@ -110,7 +110,7 @@ public class MainActivity extends PermissionProxyActivity {
                     Tools.copyFilesAssets(context, "node-64bit", Tools.SDCardPath);
                 else
                     Tools.copyFilesAssets(context, "node-32bit", Tools.SDCardPath);
-                changeQuality(cb_high.isChecked());
+                changeQuality(cb_high.isChecked(), cb_high_all.isChecked());
             } else {
                 Tools.nowVersion = localVersionString;
                 Tools.copyFilesAssets(context, "UnblockNeteaseMusic-Renewed-" + Tools.nowVersion.replace("-high", "") + "/node_modules", Tools.SDCardPath + "/node_modules");
@@ -132,6 +132,7 @@ public class MainActivity extends PermissionProxyActivity {
     private void initView() {
         rela_enable = (RelativeLayout) findViewById(R.id.rela_enable);
         rela_high = (RelativeLayout) findViewById(R.id.rela_high);
+        rela_high_all = (RelativeLayout) findViewById(R.id.rela_high_all);
         rela_hide = (RelativeLayout) findViewById(R.id.rela_hide);
         rela_log = (RelativeLayout) findViewById(R.id.rela_log);
         cb_enable = (CheckBox) findViewById(R.id.cb_enable);
@@ -165,6 +166,7 @@ public class MainActivity extends PermissionProxyActivity {
         rg_origin.check(Tools.originResId[originIndex]);
         cb_enable.setChecked(share.getBoolean("enable", true));
         cb_high.setChecked(share.getBoolean("high", false));
+        cb_high_all.setChecked(share.getBoolean("high_all", false));
         cb_hide.setChecked(share.getBoolean("hide", false));
         cb_log.setChecked(share.getBoolean("log", false));
         String proxyContent = share.getString("proxy", "127.0.0.1:23338");
@@ -202,9 +204,17 @@ public class MainActivity extends PermissionProxyActivity {
 
         rela_high.setOnClickListener(v -> {
             boolean isChecked = !cb_high.isChecked();
-            changeQuality(isChecked);
+            changeQuality(isChecked, cb_high_all.isChecked());
             cb_high.setChecked(isChecked);
             share.edit().putBoolean("high", isChecked).apply();
+            Toast.makeText(context, "操作成功，请重启网易云音乐！", Toast.LENGTH_SHORT).show();
+        });
+
+        rela_high_all.setOnClickListener(v -> {
+            boolean isChecked = !cb_high_all.isChecked();
+            changeQuality(cb_high.isChecked(), isChecked);
+            cb_high_all.setChecked(isChecked);
+            share.edit().putBoolean("high_all", isChecked).apply();
             Toast.makeText(context, "操作成功，请重启网易云音乐！", Toast.LENGTH_SHORT).show();
         });
 
@@ -331,7 +341,7 @@ public class MainActivity extends PermissionProxyActivity {
     /**
      * 改变音质
      */
-    private void changeQuality(boolean high) {
+    private void changeQuality(boolean high, boolean high_all) {
         String packageJson = Tools.readFileFromSD(Tools.SDCardPath + File.separator + "package.json");
         String kuwo = Tools.readFileFromSD(Tools.SDCardPath + File.separator + "src" + File.separator + "provider" + File.separator + "select.js");
 //        String migu = Tools.readFileFromSD(Tools.SDCardPath + File.separator + "src" + File.separator + "provider" + File.separator + "migu.js");
@@ -355,6 +365,11 @@ public class MainActivity extends PermissionProxyActivity {
             kuwo = kuwo.replace("\n\nmodule.exports.ENABLE_FLAC = 'true'", "");
 //            migu = migu.replace("'sqPlayInfo',", "/*'sqPlayInfo'*/,");
             hook = hook.replace("(item.code != 200 || item.freeTrialInfo || item.br <= 128000)", "(item.code != 200 || item.freeTrialInfo)");
+        }
+        if (high_all){
+            hook = hook.replace("const min_br = process.env.MIN_BR || 0;", "const min_br = process.env.MIN_BR || 42000;");
+        } else{
+            hook = hook.replace("const min_br = process.env.MIN_BR || 42000", "const min_br = process.env.MIN_BR || 0");
         }
         Tools.writeFileFromSD(Tools.SDCardPath + File.separator + "package.json", packageJson);
         Tools.writeFileFromSD(Tools.SDCardPath + File.separator + "src" + File.separator + "provider" + File.separator + "select.js", kuwo);
@@ -431,7 +446,7 @@ public class MainActivity extends PermissionProxyActivity {
                                     Toast.makeText(context, "操作成功，请重启网易云音乐！", Toast.LENGTH_SHORT).show();
                                 else
                                     Toast.makeText(context, "操作失败", Toast.LENGTH_SHORT).show();
-                                changeQuality(cb_high.isChecked());
+                                changeQuality(cb_high.isChecked(), cb_high_all.isChecked());
                             }
                         }
 

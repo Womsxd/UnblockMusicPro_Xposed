@@ -28,4 +28,6 @@
 
     <string name="Module_is_Not_Active">模块未激活</string>
     <string name="proxy">自定义代理</string>
+
+    <string name="high_quality_all">全部无损</string>
 </resources>

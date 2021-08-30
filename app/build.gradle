@@ -8,8 +8,8 @@ android {
         applicationId "com.raincat.unblockmusicpro"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 285
-        versionName "2.8.5"
+        versionCode 286
+        versionName "2.8.6"
         archivesBaseName = "UnblockMusic.Pro_Xposed_${versionName}"
     }
     buildTypes {
