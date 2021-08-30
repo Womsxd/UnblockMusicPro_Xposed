@@ -88,32 +88,37 @@ public class HTTPHook implements IHookerDispatcher {
                                             @Override
                                             public void run() {
                                                 Tools.showToastOnLooper(neteaseContext, "运行成功，使用代理：" + Setting.getProxy());
+                                                if (preferences == null)
+                                                        preferences = neteaseContext.getSharedPreferences("share", Context.MODE_MULTI_PROCESS);
+                                                preferences.edit().putBoolean("hook", true).apply();
+                                                firstToastShow = false;
                                             }
                                         }).start();
-                                        return;
-                                    }
-                                    showLog = Setting.getLog();
-                                    String port = " -p 23338:23339";
-                                    Command start = new Command(0, Tools.Stop, "cd " + codePath, Setting.getNodejs() + port) {
-                                        @Override
-                                        public void commandOutput(int id, String line) {
-                                            if (showLog)
+                                        //return;
+                                    } else {
+                                        showLog = Setting.getLog();
+                                        String port = " -p 23338:23339";
+                                        Command start = new Command(0, Tools.Stop, "cd " + codePath, Setting.getNodejs() + port) {
+                                            @Override
+                                            public void commandOutput(int id, String line) {
+                                                if (showLog)
                                                 XposedBridge.log(line);
-                                            if (firstToastShow) {
-                                                if (line.contains("Error")) {
-                                                    Tools.showToastOnLooper(neteaseContext, "运行失败，错误为：" + line);
-                                                    firstToastShow = false;
-                                                } else if (line.contains("HTTP Server running")) {
-                                                    if (preferences == null)
-                                                        preferences = neteaseContext.getSharedPreferences("share", Context.MODE_MULTI_PROCESS);
-                                                    preferences.edit().putBoolean("hook", true).apply();
-                                                    Tools.showToastOnLooper(neteaseContext, "运行成功，当前优先选择" + Setting.getOriginString() + "音源");
-                                                    firstToastShow = false;
+                                                if (firstToastShow) {
+                                                    if (line.contains("Error")) {
+                                                        Tools.showToastOnLooper(neteaseContext, "运行失败，错误为：" + line);
+                                                        firstToastShow = false;
+                                                    } else if (line.contains("HTTP Server running")) {
+                                                        if (preferences == null)
+                                                            preferences = neteaseContext.getSharedPreferences("share", Context.MODE_MULTI_PROCESS);
+                                                        preferences.edit().putBoolean("hook", true).apply();
+                                                        Tools.showToastOnLooper(neteaseContext, "运行成功，当前优先选择" + Setting.getOriginString() + "音源");
+                                                        firstToastShow = false;
+                                                    }
                                                 }
                                             }
-                                        }
-                                    };
-                                    Tools.shell(neteaseContext, start);
+                                        };
+                                        Tools.shell(neteaseContext, start);
+                                    }
                                 } else {
                                     Toast.makeText(neteaseContext, "文件完整性校验失败，请打开UnblockMusic Pro并同意存储卡访问权限!", Toast.LENGTH_LONG).show();
                                     return;
