@@ -32,7 +32,6 @@ const track = (info) => {
 };
 
 const check = (info) => cache(track, info);
-get_cookie()
 
 module.exports = {
 	check
