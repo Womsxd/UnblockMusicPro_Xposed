@@ -2,28 +2,16 @@ const cache = require('../cache');
 const select = require('./select');
 const request = require('../request');
 
-const headers = {
-	'referer': 'https://mos9527.tooo.top/ncm/',
-	'cookie': ''
-};
-
-const get_cookie = () => {
-	return request('GET', 'https://mos9527.tooo.top/ncm/stats/server')
-		.then((response) => headers['cookie'] = response.headers['set-cookie'][0].replace(/expires.*Path.*/, ""))
-		.catch(e => console.log(e))
-}
-
-
 const track = (info) => {
 	const url =
-		'https://mos9527.tooo.top/ncm/pyncm/track/GetTrackAudio?song_ids=' +
+		'https://service-ghlrryee-1308098780.gz.apigw.tencentcs.com/release/pyncmd/track/GetTrackAudio?song_ids=' +
 		info.id +
 		'&bitrate=' + ['999000', '320000'].slice(
 			select.ENABLE_FLAC ? 0 : 1,
 			select.ENABLE_FLAC ? 1 : 2
 		);
 	//console.log(headers); //debug
-	return request('GET', url, headers)
+	return request('GET', url)
 		.then((response) => response.body())
 		.then((body) => {
 			// response.body() without raw should

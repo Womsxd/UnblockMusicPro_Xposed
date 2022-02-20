@@ -52,7 +52,7 @@ import javax.net.ssl.TrustManagerFactory;
  */
 
 public class Tools {
-    static String nowVersion = "0.26.4";
+    static String nowVersion = "0.26.5";
 
     final static String HOOK_NAME = "com.netease.cloudmusic";
     final static String SDCardPath = Environment.getExternalStorageDirectory() + "/UnblockMusicPro";
